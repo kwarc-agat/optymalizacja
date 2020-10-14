@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Optymalizacja", "Optymalizacja.pyproj", "{F05626D7-4D1B-4FF0-8D29-92B04F94BBAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{30CAE546-EF63-46AC-94E3-CCCA7FA494AD}"
+	ProjectSection(SolutionItems) = preProject
+		problem_matrix.csv = problem_matrix.csv
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F05626D7-4D1B-4FF0-8D29-92B04F94BBAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F05626D7-4D1B-4FF0-8D29-92B04F94BBAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6CF18759-3C10-4A12-9CC9-D26669E30667}
+	EndGlobalSection
+EndGlobal
