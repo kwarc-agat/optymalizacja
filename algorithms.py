@@ -1,6 +1,6 @@
 import numpy as np
 import random
-
+import math
 
 def read_problem_from_file(file_path):
     line_counter = 0
@@ -47,6 +47,25 @@ class TravellingSalesManProblem:
 
         return total_distance
 
+    def random_new_path(self):
+        a = random.randrange(1, len(self.sequence)-1, 1)
+        b = random.randrange(1, len(self.sequence)-1, 1)
+
+        #print("a: " + str(a))
+        #print("b: " + str(b))
+
+        if a < b:
+            temp = self.sequence[a]
+            for i in range(a, b):
+                self.sequence[i] = self.sequence[i+1]
+            self.sequence[b] = temp
+
+        if a > b:
+            temp = self.sequence[a]
+            for i in range(a, b, -1):
+                self.sequence[i] = self.sequence[i-1]
+            self.sequence[b] = temp
+
     def optimalize(self):
         """
         losuję 2 pozycje A i B
@@ -58,24 +77,8 @@ class TravellingSalesManProblem:
         print("Original Route: " + str(bestRoute))
 
         for loop in range(100000):
-            a = random.randrange(1, len(self.sequence)-1, 1)
-            b = random.randrange(1, len(self.sequence)-1, 1)
-
-            #print("a: " + str(a))
-            #print("b: " + str(b))
-
-            if a < b:
-                temp = self.sequence[a]
-                for i in range(a, b):
-                    self.sequence[i] = self.sequence[i+1]
-                self.sequence[b] = temp
-
-            if a > b:
-                temp = self.sequence[a]
-                for i in range(a, b, -1):
-                    self.sequence[i] = self.sequence[i-1]
-                self.sequence[b] = temp
-
+            
+            self.random_new_path()
             actualRoute = self.calculate_path()
 
             if actualRoute < bestRoute:
@@ -88,4 +91,33 @@ class TravellingSalesManProblem:
 
         return bestRoute
 
-    pass
+class SimulatedAnnealing:
+    def __init__(self, start_x, start_t, end_t, lam):
+        self.start_x = start_x
+        self.current_x = start_x
+        self.new_x = start_x
+        self.best_x = start_x
+
+        self.start_t = start_t
+        self.current_t = start_t
+        self.end_t = end_t
+        self.lam = lam
+
+    def run(self):
+        while self.current_t > self.end_t:
+            self.new_x = self.current_x
+            self.new_x.random_new_path()
+            if self.best_x.calculate_path() > self.current_x.calculate_path():
+                self.best_x = self.current_x
+            if self.new_x.calculate_path() <= self.current_x.calculate_path():
+                self.current_x = self.new_x
+            else:
+                delta = self.new_x.calculate_path() - self.current_x.calculate_path()
+                p = math.exp(-delta/self.current_t)
+                z = random.uniform(0,1)
+                if z < p:
+                    self.current_x = self.new_x
+            self.current_t *= self.lam
+
+
+
