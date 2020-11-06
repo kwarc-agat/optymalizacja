@@ -1,0 +1,29 @@
+
+
+Parametry
+T0 - temperatura pocz¹tkowa
+TK - tempetura koncowa
+lamba -  wspó³czynnik sch³adzania
+
+Zmiennne
+t - trasa bie¿¹ca 
+t* - trasa najlepsza 
+t' - nowa trasa
+
+L(t) d³ugoœæ trasy t
+
+KOD
+
+T=T0
+while (T<TK)
+ wylosuj a i b
+ t' = insert(a,b,t);  
+ if (L(t*)>L(t')) t*=t
+ if (L(t')<=L(t)) t=t'
+ else 
+   delta=L(t')-L(t)
+   p=exp(-delta/T)
+   z=random(0,1)
+   if (z<p) t=t'
+  T=lambda*T
+end (while)
