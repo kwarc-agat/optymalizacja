@@ -22,8 +22,7 @@ def read_problem_from_file(file_path):
 
     return matrix_size, np.array(matrix), sequence
 
-
-class TravellingSalesManProblem:
+class TravellingSalesmanProblem:
 
     def __init__(self, file_path):
         matrix_size, matrix, sequence = read_problem_from_file(file_path)
@@ -31,6 +30,9 @@ class TravellingSalesManProblem:
         self.matrix_size = matrix_size
         self.matrix = matrix
         self.sequence = sequence
+    
+    def __str__(self):
+        return str(self.sequence) + "\t = " + str(self.calculate_path())
 
     def show_params(self):
         print("Matrix size: "+str(self.matrix_size))
@@ -89,35 +91,4 @@ class TravellingSalesManProblem:
         print("Best sequence: " + str(bestSequence))
         print("Best Route: " + str(bestRoute))
 
-        return bestRoute
-
-class SimulatedAnnealing:
-    def __init__(self, start_x, start_t, end_t, lam):
-        self.start_x = start_x
-        self.current_x = start_x
-        self.new_x = start_x
-        self.best_x = start_x
-
-        self.start_t = start_t
-        self.current_t = start_t
-        self.end_t = end_t
-        self.lam = lam
-
-    def run(self):
-        while self.current_t > self.end_t:
-            self.new_x = self.current_x
-            self.new_x.random_new_path()
-            if self.best_x.calculate_path() > self.current_x.calculate_path():
-                self.best_x = self.current_x
-            if self.new_x.calculate_path() <= self.current_x.calculate_path():
-                self.current_x = self.new_x
-            else:
-                delta = self.new_x.calculate_path() - self.current_x.calculate_path()
-                p = math.exp(-delta/self.current_t)
-                z = random.uniform(0,1)
-                if z < p:
-                    self.current_x = self.new_x
-            self.current_t *= self.lam
-
-
-
+        return bestSequence, bestRoute
