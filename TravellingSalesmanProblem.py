@@ -29,6 +29,7 @@ class TravellingSalesmanProblem:
 
         self.matrix_size = matrix_size
         self.matrix = matrix
+        self.sequence_init = sequence
         self.sequence = sequence
     
     def __str__(self):
@@ -76,7 +77,7 @@ class TravellingSalesmanProblem:
         i tak 10^6 razy
         """
         bestRoute = self.calculate_path()
-        print("Original Route: " + str(bestRoute))
+        #print("Original Route: " + str(bestRoute))
 
         for loop in range(100000):
             
@@ -86,9 +87,9 @@ class TravellingSalesmanProblem:
             if actualRoute < bestRoute:
                 bestRoute = actualRoute
                 bestSequence = []
-                bestSequence = self.sequence
+                bestSequence = self.sequence.copy()
 
-        print("Best sequence: " + str(bestSequence))
-        print("Best Route: " + str(bestRoute))
+        #print("Best sequence: " + str(bestSequence))
+        #print("Best Route: " + str(bestRoute))
 
         return bestSequence, bestRoute
