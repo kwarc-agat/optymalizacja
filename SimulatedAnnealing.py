@@ -60,8 +60,7 @@ def simulated_annealing(x0, T0, Tk, lam):
 
     while T > Tk:
             x_new = random_new_path(x_current.copy())
-            x_new_length = calculate_path(x_new)
-           
+
             if calculate_path(x_best) > calculate_path(x_new):
                 x_best = x_new.copy()
             
