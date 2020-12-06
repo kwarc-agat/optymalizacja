@@ -2,6 +2,7 @@ import numpy as np
 import random
 import math
 
+
 def read_problem_from_file(file_path):
     line_counter = 0
     matrix_size = 0
@@ -22,35 +23,63 @@ def read_problem_from_file(file_path):
 
     return matrix_size, np.array(matrix), sequence
 
+
+# def calculate_path(sequence):
+#         prev_elem_index = sequence[0]
+#         total_distance = 0
+#         for elem_index in sequence:
+#             distance = MATRIX[prev_elem_index][elem_index]
+#             prev_elem_index = elem_index
+#             total_distance += distance
+#
+#         return total_distance
+
 def calculate_path(sequence):
-        prev_elem_index = sequence[0]
-        total_distance = 0
-        for elem_index in sequence:
+    prev_elem_index = sequence[0]
+    total_distance_1 = 0
+    total_distance_2 = 0
+    count_zeros = 1
+
+    for elem_index in sequence:
+        if count_zeros == 1 or count_zeros == 2:
             distance = MATRIX[prev_elem_index][elem_index]
             prev_elem_index = elem_index
-            total_distance += distance
+            total_distance_1 += distance
+            if elem_index == 0:
+                count_zeros += 1
+        if count_zeros == 3:
+            distance = MATRIX[prev_elem_index][elem_index]
+            prev_elem_index = elem_index
+            total_distance_2 += distance
 
-        return total_distance
+    if total_distance_1 >= total_distance_2:
+        total_distance = total_distance_1
+    else:
+        total_distance = total_distance_2
+
+    return total_distance
+
 
 def random_new_path(sequence):
-        a = random.randrange(1, len(sequence)-1, 1)
-        b = random.randrange(1, len(sequence)-1, 1)
+    a = random.randrange(1, len(sequence) - 1, 1)
+    b = random.randrange(1, len(sequence) - 1, 1)
 
-        while a==b:
-            b = random.randrange(1, len(sequence)-1, 1)
+    while a == b:
+        b = random.randrange(1, len(sequence) - 1, 1)
 
-        if a < b:
-            temp = sequence[a]
-            for i in range(a, b):
-                sequence[i] = sequence[i+1]
-            sequence[b] = temp
+    print("a: " + str(a) + "\tb: " + str(b))
+    if a < b:
+        temp = sequence[a]
+        for i in range(a, b):
+            sequence[i] = sequence[i + 1]
+        sequence[b] = temp
 
-        if a > b:
-            temp = sequence[a]
-            for i in range(a, b, -1):
-                sequence[i] = sequence[i-1]
-            sequence[b] = temp
-        return sequence
+    if a > b:
+        temp = sequence[a]
+        for i in range(a, b, -1):
+            sequence[i] = sequence[i - 1]
+        sequence[b] = temp
+    return sequence
 
 
 def simulated_annealing(x0, T0, Tk, lam):
@@ -59,22 +88,29 @@ def simulated_annealing(x0, T0, Tk, lam):
     T = T0
 
     while T > Tk:
-            x_new = random_new_path(x_current.copy())
+        print("-------------NEW ITERATION-----------------")
+        x_new = random_new_path(x_current.copy())
+        x_new_length = calculate_path(x_new)
+        print("Best solution:    " + str(x_best))
+        print("Current solution:  " + str(x_current))
+        print("New solution:     " + str(x_new) + " -> " + str(x_new_length))
 
-            if calculate_path(x_best) > calculate_path(x_new):
-                x_best = x_new.copy()
-            
-            if calculate_path(x_new) <= calculate_path(x_current):
-                x_current = x_new.copy()
-            else:
-                delta = calculate_path(x_new) - calculate_path(x_current)
-                p = math.exp(-delta/T)
-                z = random.random()
-                if z < p:
-                    x_current = x_new.copy()
+        if calculate_path(x_best) > calculate_path(x_new):
+            x_best = x_new
 
-            T *= lam
+        if calculate_path(x_new) <= calculate_path(x_current):
+            x_current = x_new
+        else:
+            delta = calculate_path(x_new) - calculate_path(x_current)
+            p = math.exp(-delta / T)
+            z = random.random()
+            if z < p:
+                x_current = x_new
 
-    return x_best, calculate_path(x_best)
+        T *= lam
 
-_, MATRIX, _ = read_problem_from_file("problem_matrix.csv")
+    return calculate_path(x_best)
+
+
+_, MATRIX, _ = read_problem_from_file("t.csv")
+print("Whats up: " + str(calculate_path([0, 1, 2, 3, 4, 0, 5, 6, 7, 8, 0])))
