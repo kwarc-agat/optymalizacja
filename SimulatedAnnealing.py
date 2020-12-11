@@ -67,7 +67,7 @@ def random_new_path(sequence):
     while a == b:
         b = random.randrange(1, len(sequence) - 1, 1)
 
-    print("a: " + str(a) + "\tb: " + str(b))
+    #print("a: " + str(a) + "\tb: " + str(b))
     if a < b:
         temp = sequence[a]
         for i in range(a, b):
@@ -88,12 +88,12 @@ def simulated_annealing(x0, T0, Tk, lam):
     T = T0
 
     while T > Tk:
-        print("-------------NEW ITERATION-----------------")
+        #print("-------------NEW ITERATION-----------------")
         x_new = random_new_path(x_current.copy())
         x_new_length = calculate_path(x_new)
-        print("Best solution:    " + str(x_best))
-        print("Current solution:  " + str(x_current))
-        print("New solution:     " + str(x_new) + " -> " + str(x_new_length))
+        #print("Best solution:    " + str(x_best))
+        #print("Current solution:  " + str(x_current))
+        #print("New solution:     " + str(x_new) + " -> " + str(x_new_length))
 
         if calculate_path(x_best) > calculate_path(x_new):
             x_best = x_new
@@ -113,4 +113,4 @@ def simulated_annealing(x0, T0, Tk, lam):
 
 
 _, MATRIX, _ = read_problem_from_file("t.csv")
-print("Whats up: " + str(calculate_path([0, 1, 2, 3, 4, 0, 5, 6, 7, 8, 0])))
+#print("Whats up: " + str(calculate_path([0, 1, 2, 3, 4, 0, 5, 6, 7, 8, 0])))
